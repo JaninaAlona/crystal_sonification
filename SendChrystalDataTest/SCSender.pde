@@ -1,4 +1,3 @@
-//message too long
 import oscP5.*;
 import netP5.*;
 class SCSender {
@@ -35,6 +34,6 @@ class SCSender {
   void sendToSC(float value) {
     msg = new OscMessage("/testMessage");
     msg.add(value); //Daten hier hinzufuegen
-    //osc.send(msg, supercollider);
+    osc.send(msg, supercollider);
   }
 }
