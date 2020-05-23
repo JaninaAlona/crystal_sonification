@@ -1,9 +1,7 @@
 class DiffImageMaker {
-  private ArrayList<PImage> diffImages;
   DiffImageMaker() {
-    diffImages = new ArrayList<PImage>();
   }
-  void computeDiffImage(PImage first, PImage second) {
+  PImage computeDiffImage(PImage first, PImage second) {
     PImage diffImage = createImage(1480, 1080, RGB);
     first.loadPixels();
     second.loadPixels();
@@ -25,9 +23,6 @@ class DiffImageMaker {
       } 
     }
     diffImage.updatePixels();
-    diffImages.add(diffImage);
-  }
-  ArrayList<PImage> getDiffImages() {
-    return diffImages;
+    return diffImage;
   }
 }

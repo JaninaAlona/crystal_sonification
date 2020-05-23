@@ -1,42 +1,49 @@
-int numOfImages = 3;
-int dataCounter = 0;
+int numOfImages = 26;
+int imageCounter = 0;
+int messageCounter = 0;
 PImage[] sourceImages;
 ArrayList<PImage> destImages;
 ArrayList<Float> dataToSend;
 DiffImageMaker diffMaker;
 SCSender toSuperCollider;
 void setup() {
-  background(0);
   size(1480, 1080);
+  background(0);
+  frameRate(10);
   sourceImages =  new PImage[numOfImages];
+  destImages = new ArrayList<PImage>();
   diffMaker = new DiffImageMaker();
+  //Load images into Processing
   for(int i = 0; i < numOfImages; i++) {
-    String imgName = "crystalgrowth_"+nf(i, 2)+".png";
+    String imgName = "crystalgrowth_"+nf(i, 2)+".jpg";
     PImage source = loadImage(imgName); 
     sourceImages[i] = source;
-  }
-  for(int i = 0; i < numOfImages - 1; i++) {
-    PImage first = sourceImages[i];
-    PImage second = sourceImages[i+1];
-    diffMaker.computeDiffImage(first, second);
-  }
-  destImages = diffMaker.getDiffImages();
-  for(int i = 0; i < destImages.size(); i++) {
-    destImages.get(i).save("diffs_crystalgrowth_"+nf(i, 2)+".png");
   }
   toSuperCollider = new SCSender(destImages);
   toSuperCollider.extractData();
   dataToSend = toSuperCollider.getBrightnessData();
 }
 void draw() {
-  if(dataCounter < numOfImages) {
-    image(sourceImages[dataCounter], 0, 0);
+  //display original images
+  if(imageCounter < numOfImages) {
+    image(sourceImages[imageCounter], 0, 0);
   }
-  if(dataCounter < dataToSend.size()) {
-    toSuperCollider.sendToSC(dataToSend.get(dataCounter));
+  //Save diffImages
+  if(imageCounter < numOfImages - 1) {
+    PImage first = sourceImages[imageCounter];
+    PImage second = sourceImages[imageCounter+1];
+    PImage diffImage = diffMaker.computeDiffImage(first, second);
+    diffImage.save("diffs_crystalgrowth_"+nf(imageCounter, 2)+".jpg");
+    destImages.add(diffImage);
   }
-  if(dataCounter < dataToSend.size()) {
-    dataCounter++;
+  if(imageCounter < numOfImages) {
+    imageCounter++;
   }
-  delay(1000);
+  //Send data
+  if(messageCounter < dataToSend.size()) {
+    toSuperCollider.sendToSC(dataToSend.get(messageCounter));
+  }
+  if(messageCounter < dataToSend.size()) {
+    messageCounter++;
+  }
 }
