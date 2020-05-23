@@ -7,5 +7,5 @@ Pictures of crystalgrowth are analysed in Processing. Then I send the image data
 Requirements:
 -------------
 Download these two programms. I shot the images with a Raspberry Pi.
-https://processing.org
-https://supercollider.github.io
+- https://processing.org
+- https://supercollider.github.io
