@@ -9,7 +9,7 @@ SCSender toSuperCollider;
 void setup() {
   size(1480, 1080);
   background(0);
-  frameRate(10);
+  frameRate(20);
   sourceImages =  new PImage[numOfImages];
   destImages = new ArrayList<PImage>();
   diffMaker = new DiffImageMaker();
@@ -19,6 +19,13 @@ void setup() {
     PImage source = loadImage(imgName); 
     sourceImages[i] = source;
   }
+  for(int i = 0; i < numOfImages - 1; i++) {
+    PImage first = sourceImages[imageCounter];
+    PImage second = sourceImages[imageCounter+1];
+    PImage diffImage = diffMaker.computeDiffImage(first, second);
+    diffImage.save("diffs_crystalgrowth_"+nf(imageCounter, 2)+".jpg");
+    destImages.add(diffImage);
+  }
   toSuperCollider = new SCSender(destImages);
   toSuperCollider.extractData();
   dataToSend = toSuperCollider.getBrightnessData();
@@ -27,14 +34,6 @@ void draw() {
   //display original images
   if(imageCounter < numOfImages) {
     image(sourceImages[imageCounter], 0, 0);
-  }
-  //Save diffImages
-  if(imageCounter < numOfImages - 1) {
-    PImage first = sourceImages[imageCounter];
-    PImage second = sourceImages[imageCounter+1];
-    PImage diffImage = diffMaker.computeDiffImage(first, second);
-    diffImage.save("diffs_crystalgrowth_"+nf(imageCounter, 2)+".jpg");
-    destImages.add(diffImage);
   }
   if(imageCounter < numOfImages) {
     imageCounter++;
