@@ -26,6 +26,5 @@ OSCdef('crystalSonify', {
 	arg msg;
 	Synth(\crystalsynth, [pitchX:msg[1]*300+200]);
 	Synth(\crystalsynth, [pitchY:msg[2]*400+60]);
-	//Synth('funsynth', [pitch:50.rrand(600)]);
 }, "/crystalgrowth");
 )
