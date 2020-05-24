@@ -26,7 +26,7 @@ class DiffImageMaker {
           float xF = x;
           float yF = y;
           xCoor.add(map(xF, 0, width, 0, 1));
-          yCoor.add(map(yF, 0, width, 0, 1));
+          yCoor.add(map(yF, 0, height, 0, 1));
         }
         color diffColor = color(rDiff, gDiff, bDiff);
         diffImage.pixels[loc] = diffColor;
