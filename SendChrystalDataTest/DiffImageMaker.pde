@@ -22,7 +22,7 @@ class DiffImageMaker {
         float rDiff = abs(rFirst - rSecond);
         float gDiff = abs(gFirst - gSecond);
         float bDiff = abs(bFirst - bSecond);
-        if((rDiff > 0.0) && (gDiff > 0.0) && (bDiff > 0.0)) {
+        if(!((rDiff == 0.0) && (gDiff == 0.0) && (bDiff == 0.0))) {
           float xF = x;
           float yF = y;
           xCoor.add(map(xF, 0, width, 0, 1));
