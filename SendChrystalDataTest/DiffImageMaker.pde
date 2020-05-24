@@ -1,9 +1,9 @@
 class DiffImageMaker {
-  private ArrayList<Integer> xCoor;
-  private ArrayList<Integer> yCoor;
+  private ArrayList<Float> xCoor;
+  private ArrayList<Float> yCoor;
   DiffImageMaker() {
-    xCoor = new ArrayList<Integer>();
-    yCoor = new ArrayList<Integer>();
+    xCoor = new ArrayList<Float>();
+    yCoor = new ArrayList<Float>();
   }
   PImage computeDiffImage(PImage first, PImage second) {
     PImage diffImage = createImage(1480, 1080, RGB);
@@ -22,9 +22,11 @@ class DiffImageMaker {
         float rDiff = abs(rFirst - rSecond);
         float gDiff = abs(gFirst - gSecond);
         float bDiff = abs(bFirst - bSecond);
-        if((rDiff != 0) && (gDiff != 0) && (bDiff != 0)) {
-          xCoor.add(x);
-          yCoor.add(y);
+        if((rDiff > 0.0) && (gDiff > 0.0) && (bDiff > 0.0)) {
+          float xF = x;
+          float yF = y;
+          xCoor.add(map(xF, 0, width, 0, 1));
+          yCoor.add(map(yF, 0, width, 0, 1));
         }
         color diffColor = color(rDiff, gDiff, bDiff);
         diffImage.pixels[loc] = diffColor;
@@ -33,10 +35,10 @@ class DiffImageMaker {
     diffImage.updatePixels();
     return diffImage;
   }
-  ArrayList<Integer> getXCoor() {
+  ArrayList<Float> getXCoor() {
     return xCoor;
   }
-  ArrayList<Integer> getYCoor() {
+  ArrayList<Float> getYCoor() {
     return yCoor;
   }
 }

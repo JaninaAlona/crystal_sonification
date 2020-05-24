@@ -20,5 +20,5 @@ OSCdef('crystalSonify', {
 	arg msg;
 	Synth('funsynth', [pitch:msg[1]*400+60]);
 	//Synth('funsynth', [pitch:50.rrand(600)]);
-}, "/testMessage");
+}, "/crystalgrowth");
 )

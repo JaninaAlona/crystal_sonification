@@ -3,8 +3,8 @@ int imageCounter = 0;
 int msgCounter = 0;
 PImage[] sourceImages;
 ArrayList<PImage> destImages;
-ArrayList<Integer> xCoor;
-ArrayList<Integer> yCoor;
+ArrayList<Float> xCoor;
+ArrayList<Float> yCoor;
 int maxDataSize = 0;
 DiffImageMaker diffMaker;
 SCSender toSuperCollider;
@@ -15,9 +15,10 @@ void setup() {
   frameRate(20);
   sourceImages =  new PImage[numOfImages];
   destImages = new ArrayList<PImage>();
-  xCoor = new ArrayList<Integer>();
-  yCoor = new ArrayList<Integer>();
+  xCoor = new ArrayList<Float>();
+  yCoor = new ArrayList<Float>();
   diffMaker = new DiffImageMaker();
+  toSuperCollider = new SCSender();
   //Load images into Processing
   for(int i = 0; i < numOfImages; i++) {
     String imgName = "crystalgrowth_"+nf(i, 2)+".jpg";
@@ -31,15 +32,8 @@ void setup() {
     diffImage.save("diffs_crystalgrowth_"+nf(imageCounter, 2)+".jpg");
     destImages.add(diffImage);
   }
-  toSuperCollider = new SCSender();
   xCoor = diffMaker.getXCoor();
   yCoor = diffMaker.getYCoor();
-  if(xCoor.size() > maxDataSize) {
-    maxDataSize = xCoor.size();
-  }
-  if(yCoor.size() > maxDataSize) {
-    maxDataSize = yCoor.size();
-  }
 }
 void draw() {
   //display original images
@@ -49,16 +43,10 @@ void draw() {
   if(imageCounter < numOfImages) {
     imageCounter++;
   }
-  if((msgCounter >= xCoor.size()) && (msgCounter < yCoor.size())) {
-    toSuperCollider.sendToSC(0, yCoor.get(msgCounter));
-  }
-  if((msgCounter < xCoor.size()) && (msgCounter >= yCoor.size())) {
-    toSuperCollider.sendToSC(xCoor.get(msgCounter), 0);
-  }
-  if((msgCounter < xCoor.size()) && (msgCounter < yCoor.size())) {
+  if(msgCounter < xCoor.size()) {
     toSuperCollider.sendToSC(xCoor.get(msgCounter), yCoor.get(msgCounter));
   }
-  if(msgCounter < maxDataSize) {
+  if(msgCounter < xCoor.size()) {
     msgCounter++;
   }
 }
