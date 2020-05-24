@@ -6,6 +6,7 @@ PImage[] pathImages;
 ArrayList<PImage> destImages;
 ArrayList<Float> xCoor;
 ArrayList<Float> yCoor;
+ArrayList<Float> hues;
 int maxDataSize = 0;
 DiffImageMaker diffMaker;
 SCSender toSuperCollider;
@@ -41,6 +42,7 @@ void setup() {
   }
   xCoor = diffMaker.getXCoor();
   yCoor = diffMaker.getYCoor();
+  hues = diffMaker.getHue();
 }
 void draw() {
   //display original images
@@ -51,7 +53,7 @@ void draw() {
     imageCounter++;
   }
   if(msgCounter < xCoor.size()) {
-    toSuperCollider.sendToSC(xCoor.get(msgCounter), yCoor.get(msgCounter));
+    toSuperCollider.sendToSC(xCoor.get(msgCounter), yCoor.get(msgCounter), hues.get(msgCounter));
   }
   if(msgCounter < xCoor.size()) {
     msgCounter++;
