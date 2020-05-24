@@ -2,6 +2,7 @@ int numOfImages = 26;
 int imageCounter = 0;
 int msgCounter = 0;
 PImage[] sourceImages;
+PImage[] pathImages;
 ArrayList<PImage> destImages;
 ArrayList<Float> xCoor;
 ArrayList<Float> yCoor;
@@ -14,6 +15,7 @@ void setup() {
   background(0);
   frameRate(20);
   sourceImages =  new PImage[numOfImages];
+  pathImages =  new PImage[numOfImages];
   destImages = new ArrayList<PImage>();
   xCoor = new ArrayList<Float>();
   yCoor = new ArrayList<Float>();
@@ -25,9 +27,14 @@ void setup() {
     PImage source = loadImage(imgName); 
     sourceImages[i] = source;
   }
+  for(int i = 0; i < numOfImages; i++) {
+    String imgName = "crystalgrowth_paths_"+nf(i, 2)+".jpg";
+    PImage source = loadImage(imgName); 
+    pathImages[i] = source;
+  }
   for(int i = 0; i < numOfImages - 1; i++) {
-    PImage first = sourceImages[imageCounter];
-    PImage second = sourceImages[imageCounter+1];
+    PImage first = pathImages[imageCounter];
+    PImage second = pathImages[imageCounter+1];
     PImage diffImage = diffMaker.computeDiffImage(first, second);
     diffImage.save("diffs_crystalgrowth_"+nf(imageCounter, 2)+".jpg");
     destImages.add(diffImage);
