@@ -4,8 +4,8 @@ int msgCounter = 0;
 PImage[] sourceImages;
 PImage[] pathImages;
 ArrayList<PImage> destImages;
-ArrayList<Float> xCoor;
-ArrayList<Float> yCoor;
+ArrayList<Integer> xCoor;
+ArrayList<Integer> yCoor;
 ArrayList<Float> hues;
 int maxDataSize = 0;
 DiffImageMaker diffMaker;
@@ -18,8 +18,8 @@ void setup() {
   sourceImages =  new PImage[numOfImages];
   pathImages =  new PImage[numOfImages];
   destImages = new ArrayList<PImage>();
-  xCoor = new ArrayList<Float>();
-  yCoor = new ArrayList<Float>();
+  xCoor = new ArrayList<Integer>();
+  yCoor = new ArrayList<Integer>();
   diffMaker = new DiffImageMaker();
   toSuperCollider = new SCSender();
   //Load images into Processing
